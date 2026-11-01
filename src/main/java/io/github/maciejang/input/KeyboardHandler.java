@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class KeyboardHandler implements KeyListener {
 
-    private static boolean[] keys = new boolean[255];
+    private static boolean[] keys = new boolean[1024];
 
     private static HashMap<String, Integer> keyHash = new HashMap<>(Map.of(
             "w",87,
@@ -29,7 +29,6 @@ public class KeyboardHandler implements KeyListener {
                 index++;
                 continue;
             }
-            System.out.println(index + ": " + k);
             index++;
         }
     }

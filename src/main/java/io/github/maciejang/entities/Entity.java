@@ -1,8 +1,10 @@
 package io.github.maciejang.entities;
 
+import java.awt.*;
+
 public abstract class Entity {
-    private int x,y;
-    private int width;
+    private float x,y;
+    private float width;
 
     public Entity(){
         x = 0;
@@ -16,27 +18,29 @@ public abstract class Entity {
         this.width = width;
     }
 
-    public int getX() {
+    public abstract void render(Graphics2D g2d);
+
+    public float getX() {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(float x) {
         this.x = x;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(float y) {
         this.y = y;
     }
 
-    public int getWidth() {
+    public float getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
+    public void setWidth(float width) {
         this.width = width;
     }
 }

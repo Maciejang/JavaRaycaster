@@ -7,6 +7,8 @@ import io.github.maciejang.ui.GamePanel;
 import io.github.maciejang.ui.MainFrame;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Main {
 
@@ -19,10 +21,11 @@ public class Main {
             KeyboardHandler keyboardHandler = new KeyboardHandler();
             mainFrame.addKeyListener(keyboardHandler);
 
-            GamePanel gamePanel = new GamePanel();
+            GameState gameState = new GameState();
+            GamePanel gamePanel = new GamePanel(gameState);
             mainFrame.add(gamePanel);
 
-            GameState gameState = new GameState();
+
             GameLoop gameLoop = new GameLoop(gamePanel,gameState);
 
 
@@ -30,6 +33,20 @@ public class Main {
             mainFrame.setVisible(true);
             gamePanel.setVisible(true);
             gameLoop.start();
+
+            mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            mainFrame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    super.windowClosing(e);
+
+                    gameLoop.stop();
+
+                    mainFrame.dispose();
+
+                    System.exit(0);
+                }
+            });
         });
     }
 }

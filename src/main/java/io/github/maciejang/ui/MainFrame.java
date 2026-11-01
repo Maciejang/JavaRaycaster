@@ -8,7 +8,6 @@ public class MainFrame extends JFrame {
     public MainFrame(){
         setTitle("Raycaster");
         setPreferredSize(new Dimension(700,700));
-
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setBackground(Color.BLACK);
     }
 }

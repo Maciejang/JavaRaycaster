@@ -12,9 +12,10 @@ public class GamePanel extends JPanel {
     private final Renderer renderer;
     private final GameState gameState;
 
-    public GamePanel(){
+    public GamePanel(GameState gameState){
+        setBackground(Color.BLACK);
         renderer = new Renderer();
-        gameState = new GameState();
+        this.gameState = gameState;
     }
 
 
@@ -25,6 +26,6 @@ public class GamePanel extends JPanel {
 
         renderer.render(g2d,gameState,getWidth(),getHeight());
 
-        g2d.dispose();
+
     }
 }
