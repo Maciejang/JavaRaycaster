@@ -22,17 +22,6 @@ public class KeyboardHandler implements KeyListener {
 
 
 
-    private void printKey(){
-        int index = 0;
-        for(boolean k : keys){
-            if(!k){
-                index++;
-                continue;
-            }
-            index++;
-        }
-    }
-
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -41,13 +30,11 @@ public class KeyboardHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         keys[e.getKeyCode()] = true;
-        printKey();
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         keys[e.getKeyCode()] = false;
-        printKey();
     }
 
 
