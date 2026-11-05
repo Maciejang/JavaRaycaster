@@ -18,6 +18,16 @@ public class GameState {
         walls.add(new Wall(50,50,50,50,50));
 
         walls.add(new Wall(-30,-30,30,30,150));
+
+        for (int i = 0; i < 500; i+=50) {
+
+            int xt = (int) (i * Math.cos(Math.toRadians(i)));
+            int yt = (int) (i * Math.sin(Math.toRadians(i)));
+
+
+            walls.add(new Wall(xt,yt,50,50,50));
+        }
+
     }
 
 

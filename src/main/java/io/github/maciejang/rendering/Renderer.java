@@ -9,8 +9,9 @@ import java.awt.geom.AffineTransform;
 
 public class Renderer {
 
-    private int MAX_DISTACE = 800;
-    private double STEP = 2.0;
+    private final int MAX_DISTACE = 800;
+    private final double STEP = 2.0;
+    private final int LINE_WIDTH = 1;
 
     private Color shadeRay(Color clr, double distance){
         int c = (int) (255 * (1-distance/(MAX_DISTACE/2)));
@@ -25,9 +26,12 @@ public class Renderer {
         Player player = gameState.getPlayer();
         double FOV = Math.toRadians(player.getFOV());
 
+        int hitCount = 0;
         int hitStreak = 0;
-        for(int i=0; i < screenWidth;i++){
-            double rayAngle = (player.getRotation() - (FOV/2) + ((double)i/screenWidth) * FOV);
+
+        boolean hitC = false;
+        for(int i=0; i < screenWidth;i+=LINE_WIDTH){
+            double rayAngle = (player.getRotation() - (FOV/2) + ((double)i/(screenWidth)) * FOV);
 
             double distance = 0;
             boolean hit = false;
@@ -60,6 +64,7 @@ public class Renderer {
 
             }
 
+
             double correctedDistance = distance * Math.cos(rayAngle-player.getRotation());
             if(hit){
                 hitStreak++;
@@ -68,14 +73,29 @@ public class Renderer {
                 int startY = (screenHeight / 2) + (wallHeight / 2);
                 int endY = (screenHeight / 2) - (wallHeight / 2);
 
+
+//                if(hitC){
+//                    g2d.setColor(Color.BLUE);
+//                    hitC = false;
+//                }else{
+//                    g2d.setColor(Color.RED);
+//                    hitC = true;
+//                }
+
                 g2d.setColor(hitColor);
+
+                g2d.setStroke(new BasicStroke(LINE_WIDTH));
                 g2d.drawLine(i, startY, i, endY);
 
                 g2d.setColor(Color.WHITE);
+
+                hitCount++;
             }else{
                 hitStreak = 0;
             }
         }
+
+        g2d.drawString("Lines per render: " + hitCount, 20,20);
 
 
     }
