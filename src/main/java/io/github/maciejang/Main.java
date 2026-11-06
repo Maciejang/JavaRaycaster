@@ -2,7 +2,8 @@ package io.github.maciejang;
 
 import io.github.maciejang.game.GameLoop;
 import io.github.maciejang.game.GameState;
-import io.github.maciejang.input.KeyboardHandler;
+import io.github.maciejang.managers.KeyboardManager;
+import io.github.maciejang.managers.TextureManager;
 import io.github.maciejang.ui.GamePanel;
 import io.github.maciejang.ui.MainFrame;
 
@@ -15,10 +16,17 @@ public class Main {
 
 
     public static void main(String[] args) {
-
+        try {
+            System.out.println("Loading textures");
+            TextureManager.loadTexture(1, "/textures/grass.png");
+            TextureManager.loadTexture(2, "/textures/sky.png");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         SwingUtilities.invokeLater(()->{
+            System.out.println("Creating Swing");
             MainFrame mainFrame = new MainFrame();
-            KeyboardHandler keyboardHandler = new KeyboardHandler();
+            KeyboardManager keyboardHandler = new KeyboardManager();
             mainFrame.addKeyListener(keyboardHandler);
 
             GameState gameState = new GameState();

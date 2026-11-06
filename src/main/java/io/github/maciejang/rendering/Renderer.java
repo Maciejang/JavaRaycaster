@@ -2,29 +2,38 @@ package io.github.maciejang.rendering;
 
 import io.github.maciejang.entities.Player;
 import io.github.maciejang.game.GameState;
+import io.github.maciejang.managers.TextureManager;
 import io.github.maciejang.mapObjects.Wall;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 
 public class Renderer {
 
-    private final int MAX_DISTACE = 800;
+    private final int MAX_DISTANCE = 1000;
     private final double STEP = 2.0;
-    private final int LINE_WIDTH = 1;
+    private final int LINE_WIDTH = 10;
 
-    private Color shadeRay(Color clr, double distance){
-        int c = (int) (255 * (1-distance/(MAX_DISTACE/2)));
-        int r = Math.min(255,clr.getRed()+c);
-        int g = Math.min(255,clr.getGreen()+c);
-        int b = Math.max(Math.min(255,c),100);
-         return new Color(0,0,b);
+    private Color shadeRay(Color clr, double distance) {
+        double factor = Math.max(0.0, 1.0 - (distance / (MAX_DISTANCE )));
+        int r = (int) (clr.getRed() * factor);
+        int g = (int) (clr.getGreen() * factor);
+        int b = (int) (clr.getBlue() * factor);
+        return new Color(Math.min(255, r), Math.min(255, g), Math.min(255, b));
     }
-
     public void render(Graphics2D g2d, GameState gameState, int screenWidth, int screenHeight){
 
         Player player = gameState.getPlayer();
         double FOV = Math.toRadians(player.getFOV());
+
+        int[] groundSky = gameState.getGroundSkyID();
+
+        g2d.setColor(new Color(0,170,255));
+        g2d.fillRect(0,0,screenWidth,screenHeight);
+        g2d.setColor(Color.darkGray);
+        g2d.fillRect(0,screenHeight-(screenHeight/2),screenWidth,screenHeight/2);
+
 
         int hitCount = 0;
         int hitStreak = 0;
@@ -42,7 +51,7 @@ public class Renderer {
 
             hitStreak++;
 
-            while(!hit && distance < MAX_DISTACE){
+            while(!hit && distance < MAX_DISTANCE){
                 distance += STEP;
                 int rayX = (int) (player.getX() + distance * Math.cos(rayAngle));
                 int rayY = (int) (player.getY() + distance * Math.sin(rayAngle));
@@ -53,9 +62,7 @@ public class Renderer {
                             w.getY() <= rayY && rayY <= w.getY() + w.getHeight()) {
                         hit = true;
 
-//                        hitColor = shadeRay(w.getColor(),distance);
-
-                        hitColor = w.getColor();
+                        hitColor = shadeRay(w.getColor(),distance);
 
                         visualHeight = w.getVisualHeight();
                         break;
@@ -65,8 +72,10 @@ public class Renderer {
             }
 
 
-            double correctedDistance = distance * Math.cos(rayAngle-player.getRotation());
+
             if(hit){
+                double correctedDistance = distance * Math.cos(rayAngle-player.getRotation());
+                if (correctedDistance < 1) correctedDistance = 1;
                 hitStreak++;
                 double projPlaneDist = (screenWidth/2.0) / Math.tan(FOV/2.0);
                 int wallHeight = (int) (visualHeight * projPlaneDist / correctedDistance);

@@ -1,11 +1,11 @@
-package io.github.maciejang.input;
+package io.github.maciejang.managers;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.Map;
 
-public class KeyboardHandler implements KeyListener {
+public class KeyboardManager implements KeyListener {
 
     private static boolean[] keys = new boolean[1024];
 

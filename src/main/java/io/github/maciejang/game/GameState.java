@@ -12,6 +12,8 @@ public class GameState {
     private ArrayList<Entity> entities = new ArrayList<>();
     private ArrayList<Wall> walls = new ArrayList<>();
 
+    private int[] groundSkyID = {1,2};
+
     public GameState(){
         player = new Player();
         entities.add(player);
@@ -46,5 +48,13 @@ public class GameState {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public int[] getGroundSkyID() {
+        return groundSkyID;
+    }
+
+    public void setGroundSkyID(int[] groundSkyID) {
+        this.groundSkyID = groundSkyID;
     }
 }

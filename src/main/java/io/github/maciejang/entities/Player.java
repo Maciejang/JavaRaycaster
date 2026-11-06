@@ -1,6 +1,6 @@
 package io.github.maciejang.entities;
 
-import io.github.maciejang.input.KeyboardHandler;
+import io.github.maciejang.managers.KeyboardManager;
 
 import java.awt.*;
 
@@ -12,27 +12,27 @@ public class Player extends Entity{
     public void userInput(){
         double rot = getRotation();
 
-        if(KeyboardHandler.inputUsed("w")){
+        if(KeyboardManager.inputUsed("w")){
             setX((float) (getX() + speed * Math.cos(rot)));
             setY((float) (getY() + speed * Math.sin(rot)));
         }
-        if(KeyboardHandler.inputUsed("s")){
+        if(KeyboardManager.inputUsed("s")){
             setX((float) (getX() - speed * Math.cos(rot)));
             setY((float) (getY() - speed * Math.sin(rot)));
         }
 
-        if(KeyboardHandler.inputUsed("a")){
+        if(KeyboardManager.inputUsed("a")){
             setX((float) (getX() + speed * Math.sin(rot)));
             setY((float) (getY() - speed * Math.cos(rot)));
         }
-        if(KeyboardHandler.inputUsed("d")){
+        if(KeyboardManager.inputUsed("d")){
             setX((float) (getX() - speed * Math.sin(rot)));
             setY((float) (getY() + speed * Math.cos(rot)));
         }
 
-        if(KeyboardHandler.inputUsed("arrowLeft")){
+        if(KeyboardManager.inputUsed("arrowLeft")){
             setRotation(getRotation() - 0.05);
-        } else if (KeyboardHandler.inputUsed("arrowRight")) {
+        } else if (KeyboardManager.inputUsed("arrowRight")) {
             setRotation(getRotation() + 0.05);
         }
     }

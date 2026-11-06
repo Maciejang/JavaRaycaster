@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 
 import io.github.maciejang.game.GameState;
-import io.github.maciejang.input.KeyboardHandler;
 import io.github.maciejang.rendering.Renderer;
 
 public class GamePanel extends JPanel {
